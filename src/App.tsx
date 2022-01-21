@@ -10,7 +10,7 @@ export default () => {
   const [responseFromContent, setResponseFromContent] = useState<string>('');
 
 
-  useEffect(() => {
+  useEffect(() => {  
     const queryInfo = {active: true, lastFocusedWindow: true};
 
     chrome.tabs && chrome.tabs.query(queryInfo, tabs => {
@@ -24,7 +24,6 @@ const sendTestMessage = () => {
       from: Sender.React,
       message: "Hello from React",
   }
-  console.log("pressed");
 
   getCurrentTabUId((id) => {
       id && chrome.tabs.sendMessage(
