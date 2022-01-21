@@ -9,7 +9,8 @@ module.exports = {
                     require.resolve('react-dev-utils/webpackHotDevClient'),paths.appIndexJs].filter(Boolean),
                     content: paths.appSrc + '/chrome/content.ts',
                     background: paths.appSrc + '/chrome/background.ts',
-                    options: paths.appSrc + '/options/index.tsx'
+                    options: paths.appSrc + '/options/index.tsx',
+                    devtools: paths.appSrc + '/chrome/devtools.tsx',
                 },
                 output: {
                     ...webpackConfig.output,
@@ -27,7 +28,14 @@ module.exports = {
                     template: paths.appHtml,
                     filename: 'options.html',
                         
-                      }),
+                    }),
+                    new HtmlWebpackPlugin({
+                        inject: true,
+                        chunks: ["devtools"],
+                        template: paths.appHtml,
+                        filename: 'devtools.html',
+                            
+                    }),
                 ]
             }
         },

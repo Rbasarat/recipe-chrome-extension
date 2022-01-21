@@ -10,6 +10,7 @@
     "options_ui": {
       "page": "index.html"
     },
+    "devtools_page": "devtools.html",
     "icons": {
         "16": "logo192.png",
         "48": "logo192.png",
@@ -25,9 +26,12 @@
         "js": ["./static/js/content.js"]
       }
     ],
-    "devtools_page": "index.html",
     "permissions": [
-      "<all_urls>",
-      "tabs"
+      "tabs",
+      "activeTab"
+    ],
+    "host_permissions" : [      
+      "<all_urls>"
     ]
+
 }
