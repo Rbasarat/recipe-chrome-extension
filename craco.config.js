@@ -8,9 +8,10 @@ module.exports = {
                     main: [env === 'development' &&
                     require.resolve('react-dev-utils/webpackHotDevClient'),paths.appIndexJs].filter(Boolean),
                     content: paths.appSrc + '/chrome/content.ts',
-                    background: paths.appSrc + '/chrome/background.ts',
-                    options: paths.appSrc + '/options/index.tsx',
+                    background: paths.appSrc + '/chrome/background.ts',                    
                     devtools: paths.appSrc + '/chrome/devtools.tsx',
+                    options: paths.appSrc + '/options/index.tsx',
+                    scraper: paths.appSrc + '/scraper/index.tsx'
                 },
                 output: {
                     ...webpackConfig.output,
@@ -24,17 +25,27 @@ module.exports = {
                    ...webpackConfig.plugins,
                    new HtmlWebpackPlugin({
                     inject: true,
+                    chunks: ["main"],
+                    template: paths.appHtml,
+                    filename: 'main.html',                        
+                    }),
+                   new HtmlWebpackPlugin({
+                    inject: true,
                     chunks: ["options"],
                     template: paths.appHtml,
-                    filename: 'options.html',
-                        
+                    filename: 'options.html',                        
+                    }),
+                    new HtmlWebpackPlugin({
+                        inject: true,
+                        chunks: ["scraper"],
+                        template: paths.appHtml,
+                        filename: 'scraper.html',
                     }),
                     new HtmlWebpackPlugin({
                         inject: true,
                         chunks: ["devtools"],
                         template: paths.appHtml,
                         filename: 'devtools.html',
-                            
                     }),
                 ]
             }

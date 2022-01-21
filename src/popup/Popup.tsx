@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import logo from './logo.svg';
-import './App.css';
-import { getCurrentTabUId } from './chrome/utils';
-import { ChromeMessage, Sender } from './types';
+import logo from '../logo.svg';
+import './Popup.css';
+import { getCurrentTabUId } from '../chrome/utils';
+import { ChromeMessage, Sender } from '../types';
 
 export default () => {
 

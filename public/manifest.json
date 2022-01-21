@@ -4,11 +4,11 @@
     "version": "1.0",
     "manifest_version": 3,
     "action": {
-        "default_popup": "index.html",
+        "default_popup": "main.html",
         "default_title": "Open the popup"
     },
     "options_ui": {
-      "page": "index.html"
+      "page": "options.html"
     },
     "devtools_page": "devtools.html",
     "icons": {
