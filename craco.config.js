@@ -1,3 +1,4 @@
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 module.exports = {
     webpack: {
         configure: (webpackConfig, {env, paths}) => {
@@ -6,8 +7,9 @@ module.exports = {
                 entry: {
                     main: [env === 'development' &&
                     require.resolve('react-dev-utils/webpackHotDevClient'),paths.appIndexJs].filter(Boolean),
-                    content: './src/chrome/content.ts',
-                    background: './src/chrome/background.ts'
+                    content: paths.appSrc + '/chrome/content.ts',
+                    background: paths.appSrc + '/chrome/background.ts',
+                    options: paths.appSrc + '/options/index.tsx'
                 },
                 output: {
                     ...webpackConfig.output,
@@ -16,7 +18,17 @@ module.exports = {
                 optimization: {
                     ...webpackConfig.optimization,
                     runtimeChunk: false,
-                }
+                },
+                plugins: [
+                   ...webpackConfig.plugins,
+                   new HtmlWebpackPlugin({
+                    inject: true,
+                    chunks: ["options"],
+                    template: paths.appHtml,
+                    filename: 'options.html',
+                        
+                      }),
+                ]
             }
         },
     }
