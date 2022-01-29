@@ -8,6 +8,7 @@ export default () => {
 
   const [url, setUrl] = useState<string|undefined>('');
   const [responseFromContent, setResponseFromContent] = useState<string>('');
+  const [highlightEnabled, sethighlightEnabled] = useState<boolean>(true);
 
 
   useEffect(() => {  
@@ -22,7 +23,8 @@ export default () => {
 const sendTestMessage = () => {
   const message: ChromeMessage = {
       from: Sender.React,
-      message: "Hello from React",
+      id: "test",
+      content: "Hello from React",
   }
 
   getCurrentTabUId((id) => {
@@ -33,6 +35,15 @@ const sendTestMessage = () => {
               setResponseFromContent(responseFromContentScript);
           });
   });
+};
+
+const toggleHighlighting = () => {
+  getCurrentTabUId((id) => {
+      id && chrome.tabs.sendMessage(
+          id,
+          highlightEnabled);
+  });
+  sethighlightEnabled(!highlightEnabled)
 };
 
   return (
@@ -51,7 +62,11 @@ const sendTestMessage = () => {
                 <p>
                     {responseFromContent}
                 </p>
+                <div>
+        <button onClick={toggleHighlighting}>START/STOP</button>
+      </div>
       </header>
+
     </div>
   );
 }
