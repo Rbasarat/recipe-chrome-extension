@@ -10,21 +10,11 @@ export default () => {
   const [responseFromContent, setResponseFromContent] = useState<string>('');
   const [highlightEnabled, sethighlightEnabled] = useState<boolean>(true);
 
-
-  useEffect(() => {  
-    const queryInfo = {active: true, lastFocusedWindow: true};
-
-    chrome.tabs && chrome.tabs.query(queryInfo, tabs => {
-        const url = tabs[0].url;
-        setUrl(url);
-    });
-}, []);
-
-const sendTestMessage = () => {
-  const message: ChromeMessage = {
-      from: Sender.React,
-      id: "test",
-      content: "Hello from React",
+  const sendTestMessage = () => {
+    const message: ChromeMessage = {
+        from: Sender.React,
+        id: "test",
+        content: "Hello from React",
   }
 
   getCurrentTabUId((id) => {
@@ -45,6 +35,15 @@ const toggleHighlighting = () => {
   });
   sethighlightEnabled(!highlightEnabled)
 };
+
+
+useEffect(() => {  
+  const queryInfo = {active: true, lastFocusedWindow: true};
+    chrome.tabs && chrome.tabs.query(queryInfo, tabs => {
+      const url = tabs[0].url;
+      setUrl(url);
+  });
+}, []);
 
   return (
     <div className="App">

@@ -1,17 +1,10 @@
-export {}
+import { ChromeMessage, Sender } from "../types";
+
 /** Fired when the extension is first installed,
  *  when the extension is updated to a new version,
  *  and when Chrome is updated to a new version. */
-chrome.runtime.onInstalled.addListener((details) => {
-    console.log('[background.js] onInstalled', details);
-});
-
-chrome.runtime.onConnect.addListener((port) => {
-    console.log('[background.js] onConnect', port)
-});
-
-chrome.runtime.onStartup.addListener(() => {
-    console.log('[background.js] onStartup')
+ chrome.runtime.onInstalled.addListener((details) => {
+    console.log('[background.js] onInstalled', details);   
 });
 
 /**
@@ -26,3 +19,9 @@ chrome.runtime.onStartup.addListener(() => {
 chrome.runtime.onSuspend.addListener(() => {
     console.log('[background.js] onSuspend')
 });
+
+chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+        console.log("joheo in backgroudn")
+        console.log(request)
+        sendResponse("johoee from background")
+ });

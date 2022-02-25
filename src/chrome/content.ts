@@ -17,7 +17,7 @@ const messagesFromReactAppListener = (
     response: MessageResponse
 ) => {
     const isValidated = validateSender(message, sender);
-
+    console.log("messagereact")
     if (isValidated) {
         return response("validated")
     }
@@ -26,33 +26,47 @@ const messagesFromReactAppListener = (
 const toggleHighlightListener = (
     enable: boolean,
 ) => {
+    console.log("togglehighlight")
     if(enable){
         document.body.addEventListener('mouseover', highlight)
         document.body.addEventListener('mouseout', removeHighlight)
+        document.body.addEventListener('click', (e: Event) => {
+            chrome.runtime.sendMessage({greeting: "hello"},(response) => {
+                console.log(response)
+            });
+        })
     }else{
         document.body.removeEventListener('mouseover', highlight)
         document.body.removeEventListener('mouseout', removeHighlight)
     }
 }
 
-const testing = () => {
-    console.log("always received")
-}
-
-function highlight (e: Event) {
+const highlight = (e: Event) => {
     var element = e.target as HTMLElement
     if(element){        
         element.classList.add(MOUSE_VISITED_CLASSNAME);
     }
 }
-function removeHighlight (e: Event) {
+const removeHighlight = (e: Event) => {
     var element = e.target as HTMLElement
     if(element){        
         element.classList.remove(MOUSE_VISITED_CLASSNAME);
     }
 }
+const sendHTMLOnClick = (e: Event) => {
+    e.preventDefault()
+    var element = e.target as HTMLElement
+    console.log("sending from content")
 
-
+    chrome.runtime.sendMessage(
+        "foo",
+        function (response) {
+            console.log(response);
+        }
+    );
+    
+    
+}
 
 const main = () => {
     console.log('[content.ts] Main')
@@ -61,7 +75,6 @@ const main = () => {
      */
     chrome.runtime.onMessage.addListener(messagesFromReactAppListener);
     chrome.runtime.onMessage.addListener(toggleHighlightListener);
-    chrome.runtime.onMessage.addListener(testing);
 }
 
 main();
