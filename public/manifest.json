@@ -1,6 +1,6 @@
 {
-    "name": "Chrome React recipe scrape Extension",
-    "description": "Scrape recipes and stores them to a postgress database",
+    "name": "Chrome React Extension",
+    "description": "Template for creating Crome extensions with React",
     "version": "1.0",
     "manifest_version": 3,
     "action": {
@@ -27,7 +27,6 @@
     ],
     "devtools_page": "index.html",
     "permissions": [
-      "<all_urls>",
       "tabs"
     ]
 }
